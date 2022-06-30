@@ -1,32 +1,22 @@
+import { ServiceEntity } from './services.entity';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ServicesService {
+  constructor(
+    @InjectRepository(ServiceEntity)
+    private serviceRepository: Repository<ServiceEntity>,
+  ) {}
 
-    private services = [
-        {
-            name: 'title',
-            description: 'description',
-            price: '1000RUB'
-        },
-        {
-            name: 'title 2',
-            description: 'description 2',
-            price: '1000RUB'
-        },
-        {
-            name: 'title 3',
-            description: 'description 3',
-            price: '1000RUB'
-        },
-        {
-            name: 'title 4',
-            description: 'description 4',
-            price: '1000RUB'
-        },
-    ]
-
-    getServices() {
-        return this.services;
-    }
+  findAll(): Promise<ServiceEntity[]> {
+    return this.serviceRepository.find()
+  }
+  findOne(id:number): Promise<ServiceEntity> {
+    return this.serviceRepository.findOneBy({id})
+  }
+  async remove(id: number): Promise<void> {
+    await this.serviceRepository.delete(id);
+  }
 }

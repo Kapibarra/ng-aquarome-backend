@@ -4,6 +4,7 @@ import { DataSource } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ServicesModule } from './services/services.module';
+import { ServiceEntity } from './services/services.entity';
 
 @Module({
   imports: [ServicesModule,TypeOrmModule.forRoot({
@@ -13,7 +14,7 @@ import { ServicesModule } from './services/services.module';
     username: 'root',
     password: 'root',
     database: 'test',
-    entities: [],
+    entities: [ServiceEntity],
     synchronize: true,
   }),
 ],
